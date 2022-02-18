@@ -24,6 +24,22 @@ public class CustomTester {
     /**
      * Test the constructor when [TODO: fill in a possible edge case here]
      */
+
+     /**
+     * Helper method to initialize all instance variables of MyDeque
+     * @param deque The deque to initialize
+     * @param data The data array
+     * @param size The value for size
+     * @param front The value for front
+     * @param rear The value for rear
+     */
+    static void initDeque(MyDeque<Integer> deque, Object[] data, int size, 
+            int front, int rear) {
+        deque.data = data;
+        deque.size = size;
+        deque.front = front;
+        deque.rear = rear;
+    }
     @Test
     public void testMyDequeConstructor() {
 
@@ -42,7 +58,27 @@ public class CustomTester {
      */
     @Test
     public void testAddFirst() {
+        MyDeque<Integer> deque = new MyDeque<>(10);
+        Integer[] orig = { 1, 2, 3, 4, 5, 6, null, null, null, null };
+        initDeque(deque, orig, 6, 0, 5);
 
+        deque.addFirst(6);
+
+        assertEquals("Capacity should not change if deque not full", 10,
+                deque.data.length);
+        assertEquals("Should increment size", 7, deque.size);
+        assertEquals("Front should move one index when inserting into " +
+                "non-empty deque", 0, deque.front);
+        assertEquals("Rear shouldn't change when calling addFirst", 6,
+                deque.rear);
+        assertEquals("6 should have been inserted into index 2",
+                Integer.valueOf(2), deque.data[2]);
+        assertEquals("Index 3 should not have changed", Integer.valueOf(3),
+                deque.data[3]);
+        assertEquals("Index 4 should not have changed",
+                Integer.valueOf(4), deque.data[4]);
+        assertEquals("Index 5 should not have changed", Integer.valueOf(5),
+                deque.data[5]);
     }
 
     /**
