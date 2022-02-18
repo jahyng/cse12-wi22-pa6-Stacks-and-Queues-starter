@@ -47,7 +47,7 @@ public class MyQueue<E> implements QueueInterface<E> {
      */
     @Override
     public void enqueue(E element) {
-        this.theQueue.addLast(element);
+        this.theQueue.addFirst(element);
     }
 
     /**

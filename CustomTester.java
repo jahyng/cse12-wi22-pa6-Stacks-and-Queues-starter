@@ -59,8 +59,8 @@ public class CustomTester {
     @Test
     public void testAddFirst() {
         MyDeque<Integer> deque = new MyDeque<>(10);
-        Integer[] orig = { 1, 2, 3, 4, 5, 6, null, null, null, null };
-        initDeque(deque, orig, 6, 0, 5);
+        Integer[] orig = { 4, 5, 6, null, null, null, null, 1, 2, 3 };
+        initDeque(deque, orig, 6, 7, 2);
 
         deque.addFirst(6);
 
@@ -68,17 +68,17 @@ public class CustomTester {
                 deque.data.length);
         assertEquals("Should increment size", 7, deque.size);
         assertEquals("Front should move one index when inserting into " +
-                "non-empty deque", 0, deque.front);
-        assertEquals("Rear shouldn't change when calling addFirst", 6,
+                "non-empty deque", 6, deque.front);
+        assertEquals("Rear shouldn't change when calling addFirst", 2,
                 deque.rear);
         assertEquals("6 should have been inserted into index 2",
-                Integer.valueOf(2), deque.data[2]);
+                Integer.valueOf(2), deque.data[8]);
         assertEquals("Index 3 should not have changed", Integer.valueOf(3),
-                deque.data[3]);
+                deque.data[9]);
         assertEquals("Index 4 should not have changed",
-                Integer.valueOf(4), deque.data[4]);
+                Integer.valueOf(4), deque.data[0]);
         assertEquals("Index 5 should not have changed", Integer.valueOf(5),
-                deque.data[5]);
+                deque.data[1]);
     }
 
     /**

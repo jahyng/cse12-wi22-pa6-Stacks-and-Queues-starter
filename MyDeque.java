@@ -63,12 +63,6 @@ public class MyDeque<E> implements DequeInterface<E>{
 
         // add element to front of list
         if (this.front == 0) {
-            // for (int i = this.rear; i > this.front; i--) {
-            //     // Object temp = this.data[i + 1];
-            //     // this.data[i + 1] = this.data[i];
-            //     // this.data[i] = 
-            //     this.data[i+1] = this.data[i];
-            // }
             this.data[this.front] = element;
         } else {
             this.data[this.front - 1] = element;

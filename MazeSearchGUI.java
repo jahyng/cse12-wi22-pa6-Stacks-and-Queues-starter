@@ -11,6 +11,8 @@
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Currency;
+
 import javax.swing.*;
 
 /**
@@ -249,10 +251,13 @@ public class MazeSearchGUI extends JFrame implements ActionListener {
         QueueInterface<Cell> theQueue = new MyQueue<Cell>(cells.length *
                 cells[0].length);
         // TODO: add the cell at row, col to the queue
+        theQueue.enqueue(new Cell(row, col, 2));
 
         // BFS algorithm
         while (theQueue.size() > 0) {
             // TODO: remove the cell from the queue and store it as currCell
+            Cell currCell = theQueue.dequeue();
+            
 
             exploredCells.enqueue(currCell);
             // If the visited cell is the finish cell, we stop searching
@@ -273,6 +278,7 @@ public class MazeSearchGUI extends JFrame implements ActionListener {
                         nextCell.setVisited();
                         nextCell.setPrevious(currCell);
                         // TODO: add the next cell to the queue
+                        theQueue.enqueue(nextCell);
                     }
                 }
             }
@@ -300,10 +306,12 @@ public class MazeSearchGUI extends JFrame implements ActionListener {
         StackInterface<Cell> theStack = new MyStack<Cell>(cells.length *
                 cells[0].length);
         // TODO: add the cell at row, col to the stack
+        theStack.push(new Cell(row, col, 2));
 
         // DFS algorithm
         while (theStack.size() > 0) {
             // TODO: remove the cell from the stack and store it as currCell
+            Cell currCell = theStack.pop();
 
             exploredCells.enqueue(currCell);
             currCell.setVisited();
@@ -324,6 +332,7 @@ public class MazeSearchGUI extends JFrame implements ActionListener {
                             && !nextCell.isVisited())) {
                         nextCell.setPrevious(currCell);
                         // TODO: add the next cell to the stack
+                        theStack.push(nextCell);
                     }
                 }
             }
