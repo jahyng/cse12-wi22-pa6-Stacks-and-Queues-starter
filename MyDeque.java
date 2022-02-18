@@ -41,10 +41,18 @@ public class MyDeque<E> implements DequeInterface<E>{
         }
         else {
             Object[] temp = new Object[this.data.length * 2];
-            for (int i = 0; i < this.size; i++) {
-                temp [i] = this.data[i];
+            int count = 0;
+            int secCount = 0;
+            while (count < this.size) {
+                if (this.front + count > this.data.length -1) {
+                    temp[count] = this.data[secCount];
+                    secCount++;
+                } else temp[count] = this.data[this.front + count];
+                count++;
             }
             this.data = temp;
+            this.front = 0;
+            this.rear = this.size-1;
         }
     }
 
@@ -59,7 +67,7 @@ public class MyDeque<E> implements DequeInterface<E>{
         }
 
         // check if deque is at capacity
-        if (this.size >= this.data.length - 1) this.expandCapacity();
+        if (this.size >= this.data.length) this.expandCapacity();
 
         // add element to front of list
         if (this.front == 0) {
@@ -85,7 +93,7 @@ public class MyDeque<E> implements DequeInterface<E>{
         }
 
         // check if deque is at capacity
-        if (this.size >= this.data.length - 1) {
+        if (this.size >= this.data.length) {
             this.expandCapacity();
         }
 

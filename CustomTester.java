@@ -12,6 +12,9 @@
 import org.junit.*;
 import static org.junit.Assert.*;
 
+import java.time.DayOfWeek;
+import java.util.concurrent.DelayQueue;
+
 /**
  * 
  * IMPORTANT: Do not change the method names and points are awarded
@@ -41,7 +44,18 @@ public class CustomTester {
     }
     @Test
     public void testMyDequeConstructor() {
+        MyDeque<Integer> deque = new MyDeque<>(10);
+        Integer[] orig = { 4, 5, 6, 7, 8, 9, 10, 1, 2, 3 };
+        initDeque(deque, orig, 10, 7, 6);
 
+        deque.expandCapacity();
+        assertEquals(10, deque.size);
+        assertEquals(20, deque.data.length);
+        for (int i = 0; i < 10; i++) {
+                assertEquals(i + 1, deque.data[i]);
+        }
+        assertEquals(0, deque.front);
+        assertEquals(9, deque.rear);
     }
 
     /**
@@ -85,39 +99,130 @@ public class CustomTester {
      */
     @Test
     public void testAddLast() {
+        MyDeque<Integer> deque = new MyDeque<>(10);
+        Integer[] orig = { 4, 5, 6, 7, 8, 9, null, 1, 2, 3 };
+        initDeque(deque, orig, 9, 7, 5);
+        boolean exceptionThrown = false;
+        Integer[] expected = { 4, 5, 6, 7, 8, 9, 10, 1, 2, 3 };
 
+        try {
+                deque.addLast(null);
+        }
+        catch (NullPointerException e) {
+                exceptionThrown = true;
+        }
+        assertTrue(exceptionThrown);
+
+        deque.addLast(10);
+
+        assertEquals(10, deque.size);
+        assertEquals(10, deque.data.length);
+        assertEquals(7, deque.front);
+        assertEquals(6, deque.rear);
+        assertEquals(4, deque.data[0]);
+        for (int i = 0; i < 10; i++) {
+                assertEquals("Failed at index" + i,expected[i], deque.data[i]);
+        }
+
+        deque.addLast(11);
+        assertEquals(11, deque.size);
+        assertEquals(20, deque.data.length);
+        assertEquals(10, deque.rear);
+        assertEquals(0, deque.front);
+        for (int i = 0; i < deque.size; i++) {
+                assertEquals(i + 1, deque.data[i]);
+        }
+        
     }
 
     /**
-     * Test the removeFirst method when [TODO]
+     * Test the removeFirst method when it removes the last element, empty
+     * deque, removes from full list with circular behavior
+     * 
      */
     @Test
     public void testRemoveFirst() {
+        MyDeque<Integer> deque = new MyDeque<>(10);
+        Integer[] orig = { null, null, null, null, 8, null, null, null, null, null };
+        initDeque(deque, orig, 1, 4, 4);
 
+        assertEquals(8, deque.removeFirst().intValue());
+        assertEquals(0, deque.size);
+        assertEquals(10, deque.data.length);
+        for (int i = 0; i < 10; i++) {
+                assertEquals(null, deque.data[i]);
+        }
+
+        // test empty deque
+        assertNull(deque.removeFirst());
+
+        // test full deque
+        Integer[] orig2 = { 4, 5, 6, 7, 8, 9, 10, 1, 2, 3 };
+        initDeque(deque, orig2, 10, 7, 6);
+
+        assertEquals(1, deque.removeFirst().intValue());
+        assertEquals(10, deque.data[deque.rear]);
+        assertEquals(6, deque.rear);
+        assertEquals(8, deque.front);
+        assertEquals(2, deque.data[deque.front]);
     }
 
     /**
-     * Test the removeLast method when [TODO]
+     * Test the removeLast method when there's only one element, no elements,
+     * and when the deque is full;
      */
     @Test
     public void testRemoveLast() {
+        MyDeque<Integer> deque = new MyDeque<>(10);
+        Integer[] orig = { null, null, null, null, 8, null, null, null, null, null };
+        initDeque(deque, orig, 1, 4, 4);
 
+        assertEquals(8, deque.removeLast().intValue());
+        assertEquals(0, deque.size);
+        assertEquals(10, deque.data.length);
+        // assertEquals(deque.front, deque.rear);
+        for (int i = 0; i < 10; i++) {
+                assertEquals(null, deque.data[i]);
+        }
+
+        // test empty deque
+        assertNull(deque.removeLast());;
+
+        // test full deque
+        Integer[] orig2 = { 4, 5, 6, 7, 8, 9, 10, 1, 2, 3 };
+        initDeque(deque, orig2, 10, 7, 6);
+
+        assertEquals(10, deque.removeLast().intValue());
+        assertEquals(9, deque.data[deque.rear]);
+        assertEquals(5, deque.rear);
+        assertEquals(7, deque.front);
+        assertEquals(1, deque.data[deque.front]);
     }
 
     /**
-     * Test the peekFirst method when [TODO]
+     * Test the peekFirst method when deque is full
      */
     @Test
-    public void testPeekFirst(){
-
+    public void testPeekFirst() {
+        MyDeque<Integer> deque = new MyDeque<>(10);
+        Integer[] orig = { 4, 5, 6, 7, 8, 9, 10, 1, 2, 3 };
+        initDeque(deque, orig, 10, 7, 6);
+        assertEquals(1, deque.peekFirst().intValue());
+        assertEquals(10, deque.size);
+        assertEquals(10, deque.data.length);
     }
 
     /**
-     * Test the peekLast method when [TODO]
+     * Test the peekLast method when deque is full
      */
     @Test
     public void testPeekLast(){
-
+        MyDeque<Integer> deque = new MyDeque<>(10);
+        Integer[] orig = { 4, 5, 6, 7, 8, 9, 10, 1, 2, 3 };
+        initDeque(deque, orig, 10, 7, 6);
+        assertEquals(10, deque.peekLast().intValue());
+        assertEquals(10, deque.size);
+        assertEquals(10, deque.data.length);
     }
 
     // ----------------MyStack class----------------
