@@ -13,7 +13,6 @@ import org.junit.*;
 import static org.junit.Assert.*;
 
 /**
- * TODO: Add your class header
  * 
  * IMPORTANT: Do not change the method names and points are awarded
  * only if your test cases cover cases that the public tester file
