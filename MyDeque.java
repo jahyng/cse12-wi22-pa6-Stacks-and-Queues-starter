@@ -1,3 +1,12 @@
+/**
+ * Name: Josh Yang
+ * ID: A16667394
+ * Email: jwyang@ucsd.edu
+ * Sources: None
+ * 
+ * This file contains MyDeque class and implements DequeInterface. Is is a file
+ * for the implementation of deque used for MyQueue and MyStack 
+ */
 public class MyDeque<E> implements DequeInterface<E>{
     Object[] data;
     int size;

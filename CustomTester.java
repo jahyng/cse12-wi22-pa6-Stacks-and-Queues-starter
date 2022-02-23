@@ -1,25 +1,14 @@
 /**
- * TODO: Add your file header
- * Name:
- * ID:
- * Email:
- * Sources used: Put "None" if you did not have any external help
- * Some example of sources used would be Tutors, Zybooks, and Lecture Slides
- * 
- * 2-4 sentence file description here
+ * Name: Josh Yang
+ * ID: A16667394   
+ * Email: jwyang@ucsd.edu
+ * Sources used: None
+ * Custom tester file for Deques, Queues, and Stacks. Tests edge cases and other
+ * cases that public tester did not test. 
  */
 
 import org.junit.*;
-import org.junit.internal.builders.AllDefaultPossibilitiesBuilder;
-
 import static org.junit.Assert.*;
-
-import java.time.DayOfWeek;
-import java.util.concurrent.DelayQueue;
-
-import javax.management.QueryEval;
-import javax.swing.plaf.synth.SynthStyle;
-import javax.swing.undo.UndoableEditSupport;
 
 /**
  * 
@@ -45,16 +34,29 @@ public class CustomTester {
        deque.rear = rear;
    }
     /**
-     * Test the constructor when [TODO: fill in a possible edge case here]
+     * Test the constructor when innital capacity is less than 0
      */
 
     @Test
     public void testMyDequeConstructor() {
-            
+            boolean exceptionThrown = false;
+            try {
+                MyDeque<Integer> test = new MyDeque<>(-1);
+            }
+            catch (IllegalArgumentException e) {
+                exceptionThrown = true;
+            }
+            assertTrue(exceptionThrown);
+            MyDeque<Integer> test2 = new MyDeque<>(0);
+            assertEquals(0, test2.size());
+            assertEquals(0, test2.data.length);
+            assertEquals(0, test2.front);
+            assertEquals(test2.front, test2.rear);
     }
 
 /**
- * Test the expandCapacity method when [TODO]
+ * Test the expandCapacity method when front and rear are in the middle of the 
+ * list.
  */
 @Test
 public void testMyDequeExpandCapacity() {

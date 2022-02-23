@@ -1,8 +1,7 @@
 /**
- * TODO: Add your file header
  * Name: Josh Yang
  * Email: jwyang@ucsd.edu
- * Sources used: Put "None" if you did not have any external help
+ * Sources used: None
  * 
  * This file contains a MyQueue class, which is an implementation for the Queue
  * ADT based on MyDeque. Elements can be added/removed from the queue in a FIFO
