@@ -71,7 +71,12 @@ public class MyDeque<E> implements DequeInterface<E>{
 
         // add element to front of list
         if (this.front == 0) {
-            this.data[this.front] = element;
+            if (this.size == 0) {
+                this.data[0] = element;
+            } else {
+                this.data[this.data.length-1] = element;
+                this.front = this.data.length - 1;
+            }
         } else {
             this.data[this.front - 1] = element;
             this.front--;
@@ -79,6 +84,7 @@ public class MyDeque<E> implements DequeInterface<E>{
 
         // update front and size
         this.size++;
+
 
     }
 
@@ -111,10 +117,18 @@ public class MyDeque<E> implements DequeInterface<E>{
      */
     public E removeFirst() {
         if (this.size != 0) {
-           
+            // get element at the front
             Object temp = this.data[this.front];
+
+            // remove element at front
             this.data[this.front] = null;
-            this.front++;
+            
+            // check if front is the end of the list
+            if (this.front == this.data.length - 1) {
+                this.front = 0;
+            } else this.front++;
+
+            // step down size
             this.size--;
             return (E) temp;
         } else return null;
@@ -126,9 +140,17 @@ public class MyDeque<E> implements DequeInterface<E>{
      */
     public E removeLast() {
         if (this.size != 0) {
+            // store last element
             Object temp = this.data[this.rear];
+
+            // remove last element from list
             this.data[this.rear] = null;
-            this.rear--;
+
+            // check if the rear is at front of list
+            if (this.rear == 0) this.rear = this.data.length - 1;
+            else this.rear--;
+
+            // step down size
             this.size--;
             return (E) temp;
         } else return null;

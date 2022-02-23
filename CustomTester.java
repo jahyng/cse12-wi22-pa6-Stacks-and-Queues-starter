@@ -10,10 +10,16 @@
  */
 
 import org.junit.*;
+import org.junit.internal.builders.AllDefaultPossibilitiesBuilder;
+
 import static org.junit.Assert.*;
 
 import java.time.DayOfWeek;
 import java.util.concurrent.DelayQueue;
+
+import javax.management.QueryEval;
+import javax.swing.plaf.synth.SynthStyle;
+import javax.swing.undo.UndoableEditSupport;
 
 /**
  * 
@@ -24,24 +30,24 @@ import java.util.concurrent.DelayQueue;
 public class CustomTester {
     // ----------------MyDeque class----------------
     /**
+    * Helper method to initialize all instance variables of MyDeque
+    * @param deque The deque to initialize
+    * @param data The data array
+    * @param size The value for size
+    * @param front The value for front
+    * @param rear The value for rear
+    */
+   static void initDeque(MyDeque<Integer> deque, Object[] data, int size, 
+           int front, int rear) {
+       deque.data = data;
+       deque.size = size;
+       deque.front = front;
+       deque.rear = rear;
+   }
+    /**
      * Test the constructor when [TODO: fill in a possible edge case here]
      */
 
-     /**
-     * Helper method to initialize all instance variables of MyDeque
-     * @param deque The deque to initialize
-     * @param data The data array
-     * @param size The value for size
-     * @param front The value for front
-     * @param rear The value for rear
-     */
-    static void initDeque(MyDeque<Integer> deque, Object[] data, int size, 
-            int front, int rear) {
-        deque.data = data;
-        deque.size = size;
-        deque.front = front;
-        deque.rear = rear;
-    }
     @Test
     public void testMyDequeConstructor() {
         MyDeque<Integer> deque = new MyDeque<>(10);
@@ -92,6 +98,8 @@ public class CustomTester {
                 Integer.valueOf(4), deque.data[0]);
         assertEquals("Index 5 should not have changed", Integer.valueOf(5),
                 deque.data[1]);
+
+                
     }
 
     /**
@@ -132,6 +140,7 @@ public class CustomTester {
         for (int i = 0; i < deque.size; i++) {
                 assertEquals(i + 1, deque.data[i]);
         }
+
         
     }
 
@@ -165,6 +174,19 @@ public class CustomTester {
         assertEquals(6, deque.rear);
         assertEquals(8, deque.front);
         assertEquals(2, deque.data[deque.front]);
+
+        // test removing first element
+        Integer[] orig3 = {2,3,4,5,6,7,8,9,10,1};
+        initDeque(deque, orig3, 10, 9, 8);
+        assertEquals(1, deque.removeFirst().intValue());
+        assertEquals(0, deque.front);
+        assertEquals(9, deque.size);
+        assertEquals(10, deque.data.length);
+        for (int i = 0; i < 9; i++) {
+                assertEquals(i + 2, deque.data[i]);
+        }
+        assertEquals(null, deque.data[9]);
+
     }
 
     /**
@@ -197,6 +219,15 @@ public class CustomTester {
         assertEquals(5, deque.rear);
         assertEquals(7, deque.front);
         assertEquals(1, deque.data[deque.front]);
+
+        Integer[] orig3 = {10,1,2,3,4,5,6,7,8,9};
+        initDeque(deque, orig3, 10, 1, 0);
+        assertEquals(10, deque.removeLast().intValue());
+        assertEquals(9, deque.rear);
+        assertEquals(null, deque.data[0]);
+        assertEquals(9, deque.size);
+        assertEquals(10, deque.data.length);
+        assertEquals(9, deque.data[deque.rear]);
     }
 
     /**
@@ -227,19 +258,63 @@ public class CustomTester {
 
     // ----------------MyStack class----------------
     /**
-     * Test MyStack when [TODO]
+     * Test MyStack when pushing when the list is at capacity, popping when the 
+     * front is at the list end
      */
     @Test
     public void testMyStack(){
         // You can test any method from MyStack or a combination of methods
+        MyStack<Integer> stack = new MyStack<>(10);
+        Integer[] orig = { 1, 2, 3, 4, 5, 6, 7, 8,
+                9, 10 };
+        initDeque(stack.theStack, orig, 10, 0, 9);
+
+        // test push when list is at capacity
+        stack.push(11);
+        assertEquals(11, stack.theStack.size());
+        assertEquals(20, stack.theStack.data.length);
+        assertEquals(19, stack.theStack.front);
+        assertEquals(9, stack.theStack.rear);
+        assertEquals(11, stack.theStack.data[19]);
+        for (int i = 0; i < 9; i++) {
+                assertEquals(i + 1, stack.theStack.data[i]);
+        }
+
+        // test pop method when front is last element in list
+        assertEquals(11, stack.pop().intValue());
+        assertEquals(0, stack.theStack.front);
+        assertEquals(9, stack.theStack.rear);
+        assertEquals(10, stack.size());
+        assertEquals(20, stack.theStack.data.length);
+
     }
 
     // ----------------MyQueue class----------------
     /**
-     * Test MyQueue when [TODO]
+     * Test MyQueue when enqueueing when list is at capacity
      */
     @Test
     public void testMyQueue(){
-        // You can test any method from MyQueue or a combination of methods
+        MyQueue<Integer> queue = new MyQueue<>(10);
+        Integer[] orig = { 1, 2, 3, 4, 5, 6, 7, 8,
+                9, 10 };
+        initDeque(queue.theQueue, orig, 10, 0, 9);
+
+        queue.enqueue(11);
+        assertEquals(11, queue.size());
+        assertEquals(20, queue.theQueue.data.length);
+        assertEquals(19, queue.theQueue.front);
+        assertEquals(9, queue.theQueue.rear);
+        assertEquals(11, queue.theQueue.data[19]);
+        for (int i = 0; i < 9; i++) {
+                assertEquals(i + 1, queue.theQueue.data[i]);
+        }
+
+        assertEquals(11, queue.dequeue().intValue());
+        assertEquals(10, queue.size());
+        assertEquals(0, queue.theQueue.front);
+        assertEquals(9, queue.theQueue.rear);
+        assertEquals(null, queue.theQueue.data[19]);
+                
     }
 }
