@@ -50,25 +50,26 @@ public class CustomTester {
 
     @Test
     public void testMyDequeConstructor() {
-        MyDeque<Integer> deque = new MyDeque<>(10);
-        Integer[] orig = { 4, 5, 6, 7, 8, 9, 10, 1, 2, 3 };
-        initDeque(deque, orig, 10, 7, 6);
-
-        deque.expandCapacity();
-        assertEquals(10, deque.size);
-        assertEquals(20, deque.data.length);
-        for (int i = 0; i < 10; i++) {
-                assertEquals(i + 1, deque.data[i]);
-        }
-        assertEquals(0, deque.front);
-        assertEquals(9, deque.rear);
+            
     }
 
-    /**
-     * Test the expandCapacity method when [TODO]
-     */
-    @Test
-    public void testMyDequeExpandCapacity() {
+/**
+ * Test the expandCapacity method when [TODO]
+ */
+@Test
+public void testMyDequeExpandCapacity() {
+            MyDeque<Integer> deque = new MyDeque<>(10);
+            Integer[] orig = { 4, 5, 6, 7, 8, 9, 10, 1, 2, 3 };
+            initDeque(deque, orig, 10, 7, 6);
+            
+            deque.expandCapacity();
+            assertEquals(10, deque.size);
+            assertEquals(20, deque.data.length);
+            for (int i = 0; i < 10; i++) {
+                    assertEquals(i + 1, deque.data[i]);
+            }
+            assertEquals(0, deque.front);
+            assertEquals(9, deque.rear);
 
     }
 
@@ -99,11 +100,12 @@ public class CustomTester {
         assertEquals("Index 5 should not have changed", Integer.valueOf(5),
                 deque.data[1]);
 
-                
+
     }
 
     /**
-     * Test the addLast method when [TODO]
+     * Test the addLast method when list is full and last is in the middle of 
+     * list
      */
     @Test
     public void testAddLast() {

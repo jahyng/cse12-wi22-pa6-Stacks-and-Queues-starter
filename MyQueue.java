@@ -1,5 +1,3 @@
-import javax.naming.InitialContext;
-
 /**
  * TODO: Add your file header
  * Name: Josh Yang

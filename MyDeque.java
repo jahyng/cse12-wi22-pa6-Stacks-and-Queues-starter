@@ -1,6 +1,3 @@
-import java.lang.invoke.WrongMethodTypeException;
-import java.rmi.server.ObjID;
-
 public class MyDeque<E> implements DequeInterface<E>{
     Object[] data;
     int size;
@@ -67,7 +64,7 @@ public class MyDeque<E> implements DequeInterface<E>{
         }
 
         // check if deque is at capacity
-        if (this.size >= this.data.length) this.expandCapacity();
+        while (this.size >= this.data.length) this.expandCapacity();
 
         // add element to front of list
         if (this.front == 0) {
@@ -115,6 +112,7 @@ public class MyDeque<E> implements DequeInterface<E>{
      * removes and returns element at front of deque. If no element to remove, 
      * return null. Update front and size.
      */
+    @SuppressWarnings("unchecked")
     public E removeFirst() {
         if (this.size != 0) {
             // get element at the front
@@ -138,6 +136,7 @@ public class MyDeque<E> implements DequeInterface<E>{
      * Removes and returns element at end of deque. If not element to remove, 
      * return null. Update rear and size.
      */
+    @SuppressWarnings("unchecked")
     public E removeLast() {
         if (this.size != 0) {
             // store last element
@@ -159,6 +158,7 @@ public class MyDeque<E> implements DequeInterface<E>{
     /**
      * Returns element at front of list. If no element, return null.
      */
+    @SuppressWarnings("unchecked")
     public E peekFirst() {
         if (this.size != 0) {
             return (E) this.data[this.front];
@@ -169,6 +169,7 @@ public class MyDeque<E> implements DequeInterface<E>{
     /**
      * Returns element at end of list. If no element, return null.
      */
+    @SuppressWarnings("unchecked")
     public E peekLast() {
         if (this.size != 0) {
             return (E) this.data[this.rear];
